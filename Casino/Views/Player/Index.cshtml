@@ -1,0 +1,59 @@
+﻿@model Player
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    body {
+        background-image: url('/images/mainBG.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;  
+
+    }
+
+
+    .row {
+        border: 2px solid #ccc; 
+        border-radius: 15px; 
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        background-color: white;
+    }
+</style>
+
+
+<div class="row">
+    <h1 style="text-align: left">@Model.NickName</h1>
+    <div class="left col-lg-3 col-md-3 col-sm-4">
+        <img style="border-radius: 15px;" src="data:image/png;base64,@Model.Avatar">
+            
+           <div style="padding-top:20px">
+            <h5 style="display:inline">Registration date: </h5>
+            <p style="font-size: 20px;display:inline;font-weight:700">@Model.CreatedAt.Month:@Model.CreatedAt.Day:@Model.CreatedAt.Year</p>
+           </div>
+    </div>
+
+
+    <div class="right col-lg-9 col-md-9 col-sm-8">
+        <div class="row">
+            <h2>Your bets</h2>
+            @foreach(var item in ViewBag.Archive)
+            {
+                var resultClass = item.Result < 0 ? "lose" : "win";
+
+                <div class="bet-item-@resultClass" style="display:flex; align-items:center;gap:20px">
+
+                    <p style="font-size:20px">@item.BetInfo</p>
+                    <p style="font-size:20px">@item.CreatedTime</p>
+                    <p style="font-size:20px">@item.Money</p>
+                    <p style="font-size:20px">@item.Result</p>
+
+                </div>
+
+
+            }
+        </div>
+    </div>
+</div>

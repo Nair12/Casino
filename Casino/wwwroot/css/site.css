@@ -1,0 +1,83 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.win-black{
+    background-color: black;
+
+}
+.win-red {
+    background-color: red;
+}
+
+.win-green{
+    background-color:green;
+
+}
+
+.dright{
+    height: 90hv;
+}
+.win{
+    color:gold;
+    font-size:90px;
+    width:60%;
+    padding-top:10px;
+    text-align:center;
+    margin-top:40px;
+}
+
+.history {
+    color: gold;
+    font-size: 30px;
+    width: 60%;
+    height: 20px;
+    text-align: left;
+    margin-top: 30px;
+    background-color:burlywood;
+}
+
+.timer{
+    background-color:maroon;
+    font-size:30px;
+    color:gold;
+
+}
+
+.table{
+    background-color:antiquewhite;
+    height:800px;
+}
+.bet-form{
+    width: 120px;
+    background-color:blanchedalmond;
+    border-radius: 5px;
+    border-color:maroon;
+}
+
+.bet-item-win{
+     background-color:lightgreen;
+
+}
+.bet-item-lose{
+    background-color:firebrick;
+}

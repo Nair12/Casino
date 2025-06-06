@@ -1,0 +1,215 @@
+﻿
+
+
+
+<style>
+    body {
+        background-image: url('/images/playBg.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;  
+
+    }
+</style>
+
+
+<div class="row">
+	@if(ViewBag.NickName != null)
+	{
+		<div class="alert alert-success">Welcome @ViewBag.NickName</div>
+		
+	}
+
+	@if(ViewBag.msg != null)
+	{
+		<div class="alert alert-danger">@ViewBag.msg</div>
+	}
+</div>
+
+
+
+
+
+<div class="row">
+	<div id="timer" class="timer"></div>
+	<div id="period" style="display:none;">@ViewBag.Period</div>
+
+</div>
+
+@if (!String.IsNullOrEmpty(ViewBag.NonActiveMsg))
+{
+	<div class="row">
+		<div class="alert-warning">@ViewBag.NonActiveMsg</div>
+	</div>
+}
+
+<div class="row table m-1">
+	<div class="left-roulete col-md-6 col-lg-6 col-sm-6">
+		<div class="win win-@ViewBag.WinColor">@ViewBag.WinNumber</div>
+		<div class="history" id="history">100</div>
+	</div>
+
+	<div class="right-roulete col-md-6 col-lg-6 col-sm-6">
+		<form asp-action="MakeBet" method="post">
+			<input type="number" name="number"value="-1"min="-1"max="36" placeholder="Number" class="bet-form"></input>
+			<select name="color" class="bet-form">
+		    <option value="">Color</option>
+            <option value="red">Red</option>
+			<option value="black">Black</option>
+           </select>
+
+			<select name="oddEven" class="bet-form">
+				<option value=""> odd or even...</option>
+				<option value="even">Even</option>
+				<option value="odd">Odd</option>
+			</select>
+
+			<input type="number" name="money" min="10" value="10" placeholder="Type money to bet" class="bet-form"></input>
+
+			<input type="button" value="Make bet" class="btn btn-warning" onclick="makeBet(event)"></input>
+
+		</form>
+
+
+	</div>
+	<div id="bet-list"></div>
+</div>
+
+
+<script>
+
+
+
+
+	let divTimer = document.getElementById("timer")
+	let period = document.getElementById("period").innerHTML;
+	let elapsed = 0;
+
+	setInterval(() => { 
+		divTimer.innerHTML = "Game starts in: " + (period - elapsed)+ " seconds";
+		elapsed++;
+
+		if(elapsed > period){
+			elapsed = 0;
+			// displayHistory();
+			location.reload();
+		}
+
+	},1000);
+
+
+	function displayHistory() {
+		let div = document.getElementById("history");
+		let ao = new XMLHttpRequest();
+		const url = "GetHistory"
+		ao.open('get', url, true);
+
+		ao.onreadystatechange = function () {
+
+			if (ao.readyState == 4 && ao.status == 200) {
+				let res = JSON.parse(ao.responseText);
+				let list = JSON.parse(res);
+				div.innerHTML = ""
+				for (let i = 0; i < list.length; i++)
+				{
+				   let item = list[i]
+					let cell = document.createElement("div")
+					cell.textContent = item.Number;
+					cell.style.backgroundColor = item.Color;
+					cell.style.width = "26px";
+					cell.style.height = "26px";
+
+
+					div.appendChild(cell);
+
+				
+				}
+
+			
+			
+			}
+
+		
+		
+		}
+
+
+		ao.send();
+
+	
+	}
+
+
+
+
+
+
+	function makeBet(event) {
+		const number = document.querySelector('input[name ="number"]').value;
+		const color = document.querySelector('select[name ="color"]').value;
+		const oddEven = document.querySelector('select[name ="oddEven"]').value;
+		const money = document.querySelector('input[name ="money"]').value;
+
+		let div = document.getElementById("bet-list");
+
+
+
+		const url = "ProcessBet?number=" + number + "&color=" + color + "&oddEven=" + oddEven + "&money=" + money;
+
+		let ao = new XMLHttpRequest();
+
+		ao.open('get', url, true);
+
+		ao.onreadystatechange = function(){
+		     
+			if (ao.readyState == 4 && ao.status == 200) {
+				console.log('success bet')
+				div.innerHTML = "";
+				let res = JSON.parse(ao.responseText);
+				let list = JSON.parse(res);
+				let t = document.createElement('table');
+                t.className = "table table-striped"
+				div.appendChild(t)
+				for (let i = 0; i < list.length; i++) {
+
+                 let item = list[i]
+				 
+				 let tr = document.createElement("tr")
+			     let td1 = document.createElement("td");
+				 td1.className = 'text-warning'
+				 td1.textContent = item.number;
+
+				 let td2 = document.createElement("td");
+				 td2.className = 'text-warning'
+				 td2.textContent = item.Money;
+
+
+				 let td3 = document.createElement("td");
+				 td3.className = 'text-warning'
+				 td3.textContent = item.CreatedAt.toString();
+
+
+				 tr.appendChild(td1);
+				 tr.appendChild(td2);
+				 tr.appendChild(td3);
+
+				 t.appendChild(tr)
+
+				}
+				console.log(list);
+
+			}
+		
+		}
+		ao.send();
+
+
+
+
+	}
+
+
+
+
+
+</script>
