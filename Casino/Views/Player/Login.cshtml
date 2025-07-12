@@ -7,41 +7,55 @@
 
 <style>
     body {
-        background-image: url('/images/AuthBG.jpg');
+        background-image: url('/images/blackBG.jpg');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
+    
+
+  /*   margin: 0;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    justify-content: center; 
+    align-items: center;  */
+     
     }
+
+    .form-box {
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        width: 600px;
+
+    }
+
 </style>
 
+<div style="display:flex;justify-content:center;padding-top:50px">
 
-<h1>Login</h1>
-
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Login" method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label class="control-label">Nickname</label>
-                <input asp-for="NickName" class="form-control" />
-                <span asp-validation-for="NickName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group" style="margin-top: 10px">
-                <input type="submit" value="Login" class="btn btn-primary" />
-            </div>
-         
-        </form>
+<div class="form-box">
+    <form class="form" asp-action="Login" method="post" enctype="multipart/form-data">
+        <span class="title">Sign in</span>
+        <span class="subtitle">Create a free account with your email.</span>
+        <div class="form-container">
+            <input asp-for="NickName" type="text" class="input" placeholder="Name">
+            <input asp-for="Password" type="password" class="input" placeholder="Password">
+        </div>
+        <input type="submit" value="Login" class="btn btn-primary" />
+    </form>
+    <div class="form-section">
+        <a asp-action="Register">Register here</a>
     </div>
 </div>
 
-<div>
-    <a asp-action="Register">Register here</a>
 </div>
+
+
+
 
 @section Scripts {
     @{
