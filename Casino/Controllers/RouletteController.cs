@@ -1,6 +1,7 @@
 ﻿using Casino.Data;
 using Casino.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text.Json;
 
@@ -27,7 +28,7 @@ namespace Casino.Controllers
 			history = new Dictionary<string, string>();
 		}
 
-		public IActionResult Index()
+		public async Task<IActionResult> Index()
         {
 			var uid = HttpContext.Session.GetInt32("LoggedId");
 			if (uid == null)
@@ -53,7 +54,7 @@ namespace Casino.Controllers
 			ViewBag.Period = Period;
 			ViewBag.WinColor = WinColor;
 			ViewBag.WinNumber = WinNumber;
-
+		    
 			_context.SaveChanges();
 			if (!String.IsNullOrEmpty(Message))
 			{
@@ -129,10 +130,11 @@ namespace Casino.Controllers
 		}
 
 
+		[HttpGet]
 		public JsonResult GetHistory()
 		{
 			List<History> list = _context.History.OrderByDescending(x => x.createdAt).Take(10).ToList();
-			return new JsonResult(JsonSerializer.Serialize(list));
+			return new JsonResult(list);
 
 		}
 
