@@ -131,8 +131,8 @@
 					let cell = document.createElement("div");
 					cell.textContent = item.number;
 					cell.style.backgroundColor = item.color;
-					cell.style.width = "26px";
-					cell.style.height = "26px";
+					cell.style.width = "30px";
+					cell.style.height = "30px";
 					cell.style.display = "inline-flex";      // ✅ выравнивание
 					cell.style.alignItems = "center";        // по вертикали
 					cell.style.justifyContent = "center";    // по горизонтали
@@ -166,8 +166,6 @@
 		const money = document.querySelector('input[name ="money"]').value;
 
 		let div = document.getElementById("bet-list");
-
-
 
 		const url = "ProcessBet?number=" + number + "&color=" + color + "&oddEven=" + oddEven + "&money=" + money;
 

@@ -80,3 +80,13 @@ body {
 .bet-item-lose{
     background-color:firebrick;
 }
+
+
+#bet-list {
+    max-height: 250px;
+    overflow-y: auto;
+    overflow-x: auto;
+    padding: 10px;
+    color: white;
+    position: relative;
+}
