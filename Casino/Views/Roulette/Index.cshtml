@@ -46,7 +46,13 @@
 <div class="row table m-1">
 	<div class="left-roulete col-md-6 col-lg-6 col-sm-6">
 		<div class="win win-@ViewBag.WinColor">@ViewBag.WinNumber</div>
-		<div class="history" id="history">100</div>
+	
+			<div class="history" id="history">
+			
+			</div>
+			
+		
+
 	</div>
 
 	<div class="right-roulete col-md-6 col-lg-6 col-sm-6">
@@ -78,7 +84,9 @@
 
 <script>
 
-
+	window.onload = function () {
+		displayHistory();
+	};
 
 
 	let divTimer = document.getElementById("timer")
@@ -91,8 +99,7 @@
 
 		if(elapsed > period){
 			elapsed = 0;
-			// displayHistory();
-			location.reload();
+		    location.reload();
 		}
 
 	},1000);
@@ -100,44 +107,52 @@
 
 	function displayHistory() {
 		let div = document.getElementById("history");
+		if (!div) {
+			console.error("div#history not found");
+			return;
+		}
+
 		let ao = new XMLHttpRequest();
-		const url = "GetHistory"
+		const url = "http://localhost:5138/Roulette/GetHistory";
+
 		ao.open('get', url, true);
 
 		ao.onreadystatechange = function () {
-
 			if (ao.readyState == 4 && ao.status == 200) {
-				let res = JSON.parse(ao.responseText);
-				let list = JSON.parse(res);
-				div.innerHTML = ""
-				for (let i = 0; i < list.length; i++)
-				{
-				   let item = list[i]
-					let cell = document.createElement("div")
-					cell.textContent = item.Number;
-					cell.style.backgroundColor = item.Color;
-					cell.style.width = "26px";
-					cell.style.height = "26px";
+				let list = JSON.parse(ao.responseText);
+				console.log("Got list:", list);
 
+				div.innerHTML = "";
+
+				for (let i = 0; i < list.length; i++) {
+					let item = list[i];
+					console.log("Appending:", item);
+
+					let cell = document.createElement("div");
+					cell.textContent = item.number;
+					cell.style.backgroundColor = item.color;
+					cell.style.width = "30px";
+					cell.style.height = "30px";
+					cell.style.display = "inline-flex";      // ✅ выравнивание
+					cell.style.alignItems = "center";        // по вертикали
+					cell.style.justifyContent = "center";    // по горизонтали
+					cell.style.fontSize = "14px";            // уменьшенный шрифт
+					cell.style.color = "white";
+					cell.style.margin = "3px";
+					cell.style.border = "1px solid black";
+					cell.style.borderRadius = "4px";         // чуть закруглённые
+					cell.style.boxSizing = "border-box";
 
 					div.appendChild(cell);
-
-				
 				}
 
-			
-			
+				console.log("Final innerHTML:", div.innerHTML);
 			}
-
-		
-		
-		}
-
+		};
 
 		ao.send();
-
-	
 	}
+
 
 
 
@@ -151,8 +166,6 @@
 		const money = document.querySelector('input[name ="money"]').value;
 
 		let div = document.getElementById("bet-list");
-
-
 
 		const url = "ProcessBet?number=" + number + "&color=" + color + "&oddEven=" + oddEven + "&money=" + money;
 
@@ -188,10 +201,17 @@
 				 td3.className = 'text-warning'
 				 td3.textContent = item.CreatedAt.toString();
 
+					
+				let td4 = document.createElement("td");
+				td4.className = 'text-warning'
+				td4.textContent = @ViewBag.NickName;
+
+
 
 				 tr.appendChild(td1);
 				 tr.appendChild(td2);
 				 tr.appendChild(td3);
+				 tr.appendChild(td4);
 
 				 t.appendChild(tr)
 

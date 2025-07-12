@@ -100,13 +100,14 @@ namespace Casino
 				};
 				await context.Archive.AddAsync(info);
 
-				var historyItem = new History() { Color = WinColor,Number = WinNumber,createdAt = DateTime.Now};
-
-				await context.History.AddAsync(historyItem);
 
 
 			}
 			context.Bet.RemoveRange(bets);
+
+			var historyItem = new History() { Color = WinColor, Number = WinNumber, createdAt = DateTime.Now };
+
+			await context.History.AddAsync(historyItem);
 			await context.SaveChangesAsync();
 			
 		}
