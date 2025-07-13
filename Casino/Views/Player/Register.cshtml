@@ -12,14 +12,24 @@
         background-position: center;
         background-repeat: no-repeat;
     }
+
+    .form-box{
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 700px;
+    }
+
 </style>
 
 
-<h1>Register</h1>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div style="display:flex;justify-content:center;padding-top:50px">
+    <div class="form-box col-md-4">
+        <h3>Register</h3>
         <form asp-action="Register" method="post" enctype="multipart/form-data">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label class="control-label">Nickname</label>
@@ -40,11 +50,14 @@
                 <input type="submit" value="Register" class="btn btn-primary" />
             </div>
         </form>
+            <div>
+                <a asp-action="Login">Already have account? Login!</a>
+            </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Login">Already have account? Login!</a>
+
+
 </div>
 
 @section Scripts {
