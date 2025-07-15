@@ -180,6 +180,7 @@
 				div.innerHTML = "";
 				let res = JSON.parse(ao.responseText);
 				let list = JSON.parse(res);
+				console.log(list);
 				let t = document.createElement('table');
                 t.className = "table table-striped"
 				div.appendChild(t)
@@ -204,7 +205,7 @@
 					
 				let td4 = document.createElement("td");
 				td4.className = 'text-warning'
-				td4.textContent = @ViewBag.NickName;
+				td4.textContent = "@ViewBag.NickName";
 
 
 
