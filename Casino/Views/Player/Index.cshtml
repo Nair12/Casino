@@ -9,51 +9,102 @@
         background-image: url('/images/mainBG.png');
         background-size: cover;
         background-position: center;
-        background-repeat: no-repeat;  
-
+        background-repeat: no-repeat;
     }
 
+    .profile-card {
+        background: white;
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
 
-    .row {
-        border: 2px solid #ccc; 
-        border-radius: 15px; 
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        padding: 20px;
-        background-color: white;
+    .avatar {
+        width: 100%;
+        max-width: 260px;
+        border-radius: 16px;
+        object-fit: cover;
+    }
+
+    .profile-info h1 {
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .profile-info .date {
+        color: #666;
+        font-size: 14px;
+    }
+
+    .bets-card {
+        background: white;
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .bet-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+        .bet-item:last-child {
+            border-bottom: none;
+        }
+
+    .bet-win {
+        color: #2e7d32;
+        font-weight: 600;
+    }
+
+    .bet-lose {
+        color: #c62828;
+        font-weight: 600;
     }
 </style>
 
 
-<div class="row">
-    <h1 style="text-align: left">@Model.NickName</h1>
-    <div class="left col-lg-3 col-md-3 col-sm-4">
-        <img style="border-radius: 15px;width:300px;height400px;" src="data:image/png;base64,@Model.Avatar">
-            
-           <div style="padding-top:20px">
-            <h5 style="display:inline">Registration date: </h5>
-            <p style="font-size: 20px;display:inline;font-weight:700">@Model.CreatedAt.Month:@Model.CreatedAt.Day:@Model.CreatedAt.Year</p>
-           </div>
-    </div>
 
+<div class="container mt-5">
+    <div class="row g-4">
 
-    <div class="right col-lg-9 col-md-9 col-sm-8">
-        <div class="row">
-            <h2>Your bets</h2>
-            @foreach(var item in ViewBag.Archive)
-            {
-                var resultClass = item.Result < 0 ? "lose" : "win";
+        <!-- PROFILE -->
+        <div class="col-lg-4 col-md-5">
+            <div class="profile-card text-center">
+                <img class="avatar mb-3" src="data:image/png;base64,@Model.Avatar" />
 
-                <div class="bet-item-@resultClass" style="display:flex; align-items:center;gap:20px">
-
-                    <p style="font-size:20px">@item.BetInfo</p>
-                    <p style="font-size:20px">@item.CreatedTime</p>
-                    <p style="font-size:20px">@item.Money</p>
-                    <p style="font-size:20px">@item.Result</p>
-
+                <div class="profile-info">
+                    <h1>@Model.NickName</h1>
+                    <div class="date">
+                        Registered: @Model.CreatedAt.ToString("dd.MM.yyyy")
+                    </div>
+                    <div class="balance">
+                        <span>@Model.Balance $</span>
+                    </div>
                 </div>
-
-
-            }
+            </div>
         </div>
+
+        <!-- BETS -->
+        <div class="col-lg-8 col-md-7">
+            <div class="bets-card">
+                <h2 class="mb-4">Your bets</h2>
+
+                @foreach (var item in ViewBag.Archive)
+                {
+                    var resultClass = item.Result < 0 ? "bet-lose" : "bet-win";
+
+                    <div class="bet-item">
+                        <span>@item.BetInfo</span>
+                        <span>@item.CreatedTime</span>
+                        <span>@item.Money</span>
+                        <span class="@resultClass">@item.Result</span>
+                    </div>
+                }
+            </div>
+        </div>
+
     </div>
 </div>

@@ -38,7 +38,7 @@ namespace Casino
 					WinColor = new Random().Next(0, 100) % 2 == 0 ? "black" : "red";
 					if (WinNumber == 0) WinColor = "green";
 
-						await ProcessBet(context);
+					await ProcessBet(context);
 
 					Period = 60;
 				}
@@ -66,7 +66,7 @@ namespace Casino
 				{
 					factor++;
 				}
-				if(bet.EvenOdd == "even" && WinNumber %2== 0)
+				if(bet.EvenOdd == "even" && WinNumber % 2 == 0)
 				{
 					factor++;
 				}
@@ -75,10 +75,7 @@ namespace Casino
 					factor++;
 				}
              if (factor > 0) factor++;
-
 			 else factor--;
-
-
 
 				var player = context.Player.Find(bet.PlayerId);
 				if (player != null) {

@@ -75,17 +75,23 @@
 </html>
 <script defer>
 
-    let id = @Context.Session.GetInt32("LoggedId")
+    async function getBalance() {
+        let id = @Context.Session.GetInt32("LoggedId")
+        console.log(id)
+        if (id != null) {
 
-    console.log(id)
+            let balance = document.getElementById("balance")
+            const res = await fetch(`http://192.168.0.101:5138/Player/balance/${id}`)
+            const object = await res.json();
+            balance.innerHTML = object.balance + "$";
 
-    if (id != null) {
-       
-        let balance = document.getElementById("balance")
-        fetch(`http://localhost:5138/balance/${id}`)
-            .then(data => data.json())
-            .then(json => balance.innerHTML = json.balance + '$') 
+        }
+
     }
+
+     getBalance()
+
+    
 
    
 </script>

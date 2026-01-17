@@ -113,6 +113,7 @@ namespace Casino.Controllers
             {
                 HttpContext.Session.SetInt32("LoggedId", player.Id);
                 HttpContext.Session.SetString("LoggedName", player.NickName);
+                
 				player.LastBetAt = DateTime.Now;
 				player.IsActive = true;
                   
